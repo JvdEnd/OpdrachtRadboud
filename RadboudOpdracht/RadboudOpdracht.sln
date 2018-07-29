@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadboudOpdracht", "RadboudOpdracht\RadboudOpdracht.csproj", "{FE09751E-3689-49B4-BCA4-CB9E7A71A810}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadboudOpdrachtTests", "RadboudOpdrachtTests\RadboudOpdrachtTests.csproj", "{F7BDADF6-296B-4064-A3B1-2E8305385E15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE09751E-3689-49B4-BCA4-CB9E7A71A810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE09751E-3689-49B4-BCA4-CB9E7A71A810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE09751E-3689-49B4-BCA4-CB9E7A71A810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE09751E-3689-49B4-BCA4-CB9E7A71A810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BDADF6-296B-4064-A3B1-2E8305385E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BDADF6-296B-4064-A3B1-2E8305385E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BDADF6-296B-4064-A3B1-2E8305385E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BDADF6-296B-4064-A3B1-2E8305385E15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91983750-D059-43EB-88DD-0D8B3FAAE8B6}
+	EndGlobalSection
+EndGlobal
