@@ -10,5 +10,11 @@ namespace RadboudOpdracht
         public string Accession { get; set; }
         public int Identity { get; set; }
         public int AlignmentLenght { get; set; }
+        public int IdentityCalculated { get; set; }
+
+        internal void CalculateIdentity(int identity, int alignmentLenght)
+        {
+            IdentityCalculated = (identity / alignmentLenght) * 100;
+        }
     }
 }

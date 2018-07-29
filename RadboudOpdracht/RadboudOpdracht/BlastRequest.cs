@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -23,10 +24,12 @@ namespace RadboudOpdracht
 
         /// <summary>
         /// Parses the xml returned from blast, only included the bare minimum and takes the first blast result
+        /// Should take the blast result with the best identity (hsp_identity/hsp
         /// </summary>
         /// <returns>Returns first blast hit</returns>
         public BlastHit ParseBlastXml(Stream blastXml)
         {
+            List<BlastHit> allHits = new List<BlastHit>();
             BlastHit hit = null;
             try
             {
@@ -41,9 +44,10 @@ namespace RadboudOpdracht
                         while (r.Read())
                         {
                             SelectHit(ref hit, r, ref curElement);
-                            if (hit?.Accession != null && hit?.Def != null)
+                            if (hit?.Accession != null && hit?.Def != null 
+                                && hit?.AlignmentLenght != 0 && hit?.Identity != 0)
                             {
-                                break;
+                                allHits.Add(hit);
                             }
                         }
                     }
@@ -60,7 +64,22 @@ namespace RadboudOpdracht
             {
                 throw e;
             }
-            return hit;
+
+            var bestHit = CalculateBestHit(allHits);
+            return bestHit;
+        }
+
+        /// <summary>
+        /// Calculates the best hit
+        /// </summary>
+        /// <returns>Returns best blast hit</returns>
+        private BlastHit CalculateBestHit(List<BlastHit> allHits)
+        {
+            foreach(var hit in allHits)
+            {
+                hit.CalculateIdentity(hit.Identity, hit.AlignmentLenght);
+            }
+            return allHits.OrderByDescending(x => x.IdentityCalculated).FirstOrDefault();
         }
 
         /// <summary>
@@ -85,13 +104,16 @@ namespace RadboudOpdracht
                     {
                         ParseHit(curElement, r.Value, hit);
                     }
+                    else if (curElement.StartsWith("Hsp_", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ParseHsp(curElement, r.Value, hit);
+                    }
                     break;
-
             }
         }
 
         /// <summary>
-        /// Fills the blast hit object
+        /// Fills the blast hit object with hit data
         /// </summary>
         /// <returns>Returns blast hit object</returns>
         private void ParseHit(string element, string value, BlastHit curHit)
@@ -113,7 +135,62 @@ namespace RadboudOpdracht
                 case "Hit_hsps":
                     break;
                 default:
-                    throw new FormatException($"Unknown element {element}");
+                    throw new FormatException($"Unknown element encountered: {element}");
+            }
+        }
+
+        /// <summary>
+        /// Fills the blast hit object with hsp data
+        /// </summary>
+        /// <returns>Returns blast hit object</returns>
+        private void ParseHsp(string element, string value, BlastHit curHit)
+        {
+            switch (element)
+            {
+                case "Hsp_num":
+                    break;
+                case "Hsp_bit-score":
+                    break;
+                case "Hsp_score":
+                    break;
+                case "Hsp_evalue":
+                    break;
+                case "Hsp_query-from":
+                    break;
+                case "Hsp_query-to":
+                    break;
+                case "Hsp_hit-from":
+                    break;
+                case "Hsp_hit-to":
+                    break;
+                case "Hsp_query-frame":
+                    break;
+                case "Hsp_hit-frame":
+                    break;
+                case "Hsp_identity":
+                    curHit.Identity = int.Parse(value);
+                    break;
+                case "Hsp_positive":
+                    break;
+                case "Hsp_align-len":
+                    curHit.AlignmentLenght = int.Parse(value);
+                    break;
+                case "Hsp_density":
+                    break;
+                case "Hsp_qseq":
+                    break;
+                case "Hsp_hseq":
+                    break;
+                case "Hsp_midline":
+                    break;
+                case "Hsp_pattern-from":
+                    break;
+                case "Hsp_pattern-to":
+                    break;
+                case "Hsp_gaps":
+                    break;
+                default:
+                    throw new FormatException($"Unknown element encountered: {element}");
             }
         }
 
@@ -219,7 +296,6 @@ namespace RadboudOpdracht
             data.Add(CreateKVP("PROGRAM", "blastn"));
             data.Add(CreateKVP("DATABASE", "nt"));
             data.Add(CreateKVP("QUERY", sequence));
-            //data.Add(CreateKVP("ORGANISM", "9606"));
 
             return new FormUrlEncodedContent(data);
         }
