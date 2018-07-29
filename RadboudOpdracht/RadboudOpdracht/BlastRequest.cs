@@ -48,6 +48,7 @@ namespace RadboudOpdracht
                                 && hit?.AlignmentLenght != 0 && hit?.Identity != 0)
                             {
                                 allHits.Add(hit);
+                                hit = null;
                             }
                         }
                     }
@@ -65,6 +66,7 @@ namespace RadboudOpdracht
                 throw e;
             }
 
+            allHits.RemoveAll(h => h.Def.Contains("PREDICTED"));
             var bestHit = CalculateBestHit(allHits);
             return bestHit;
         }
@@ -77,10 +79,11 @@ namespace RadboudOpdracht
         {
             foreach(var hit in allHits)
             {
-                hit.CalculateIdentity(hit.Identity, hit.AlignmentLenght);
+                hit.CalculateIdentity();
             }
             return allHits.OrderByDescending(x => x.IdentityCalculated).FirstOrDefault();
         }
+
 
         /// <summary>
         /// Select nodes with the wanted information
@@ -296,7 +299,6 @@ namespace RadboudOpdracht
             data.Add(CreateKVP("PROGRAM", "blastn"));
             data.Add(CreateKVP("DATABASE", "nt"));
             data.Add(CreateKVP("QUERY", sequence));
-
             return new FormUrlEncodedContent(data);
         }
 

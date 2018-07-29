@@ -36,7 +36,7 @@ namespace RadboudOpdracht
         /// <returns>Human protein or no match</returns>
         public async Task<string> FindInUniprot(string accession)
         {
-            var searchXml = await RequestUniProtInfo(_cancel, accession);
+           var searchXml = await RequestUniProtInfo(_cancel, accession);
             if(searchXml == "No data returned from uniprot")
             {
                 return "No Match found";

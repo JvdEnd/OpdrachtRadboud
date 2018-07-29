@@ -12,9 +12,9 @@ namespace RadboudOpdracht
         public int AlignmentLenght { get; set; }
         public int IdentityCalculated { get; set; }
 
-        internal void CalculateIdentity(int identity, int alignmentLenght)
+        internal void CalculateIdentity()
         {
-            IdentityCalculated = (identity / alignmentLenght) * 100;
+            IdentityCalculated = (Identity / AlignmentLenght) * 100;
         }
     }
 }
