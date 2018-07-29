@@ -6,6 +6,10 @@ namespace RadboudOpdracht
 {
     public class FileReader
     {
+        /// <summary>
+        /// Read file
+        /// </summary>
+        /// <returns>List of sequences</returns>
         public List<string> Readfile(string fileLocation)
         {
             List<string> allSequences = new List<string>();
@@ -36,6 +40,10 @@ namespace RadboudOpdracht
             return allSequences;
         }
 
+        /// <summary>
+        /// Process file 
+        /// </summary>
+        /// <returns>List of sequences</returns>
         private static void ProcessFile(List<string> allSequences, StreamReader reader)
         {
             var sequence = string.Empty;

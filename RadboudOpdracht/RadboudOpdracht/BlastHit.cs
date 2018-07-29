@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RadboudOpdracht
+﻿namespace RadboudOpdracht
 {
     public class BlastHit
     {

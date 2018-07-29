@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RadboudOpdracht
 {
-    //OpenReadingFrameCalculator
-    //The program should return the longest open reading frame for each sequence, the length of this reading frame, and the best match to a human protein sequence in Uniprot.
     public class Program
     {
         public static void Main()
@@ -23,6 +21,10 @@ namespace RadboudOpdracht
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Basic file checking
+        /// </summary>
+        /// <returns>List of sequences</returns>
         private static List<string> FileInput()
         {
             //Program expects the file to end with .fasta 
