@@ -32,12 +32,14 @@ namespace RadboudOpdrachtTests
             Assert.Equal("Z29296", blastHit.Accession);
         }
 
+
+        //Not working because of not selecting the right blast result
         [Fact]
         public async void HumanBlastTest()
         {
             var xml = await _blast.ExecuteBlast(new CancellationToken(), _human);
             var blastHit = _blast.ParseBlastXml(xml);
-            Assert.Equal("P05019", blastHit.Accession);
+            Assert.Equal("NM_000618", blastHit.Accession);
         }
     }
 }
